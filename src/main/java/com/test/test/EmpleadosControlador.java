@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +45,23 @@ public class EmpleadosControlador {
         empleados.add(empleadoDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }    
+    }
+
+    @PutMapping("/{idEmpleado}")
+    public ResponseEntity<Void> putEmpleado(@PathVariable("idEmpleado") Long idEmpleado, @RequestBody EmpleadoDTO empleadoDTO) {
+        for (int i=0; i < empleados.size(); i++) {
+            EmpleadoDTO empleado = empleados.get(i);
+            if (empleado.id() == idEmpleado) {
+                empleados.set(i, empleadoDTO);
+            }
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{idEmpleado}")
+    public ResponseEntity<Void> deleteEmpleado(@PathVariable("idEmpleado") Long idEmpleado) {
+        return ResponseEntity.ok().build();
+    }
+
 
 }
